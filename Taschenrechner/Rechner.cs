@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SimpleExpressionEvaluator;
 
 namespace Taschenrechner
 {
     /// <summary>
-    /// Diese Klasse rechnet.
+    ///     Diese Klasse rechnet.
     /// </summary>
     internal class Rechner
     {
-
+        internal decimal EvaluateExpression(string equation) => new ExpressionEvaluator().Evaluate(equation);
     }
 }

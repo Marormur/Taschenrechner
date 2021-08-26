@@ -1,49 +1,51 @@
 ﻿using System.ComponentModel;
+using System.Globalization;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Linq;
+using MahApps.Metro.Converters;
 using Microsoft.Xaml.Behaviors.Core;
 using Taschenrechner.Annotations;
 
 namespace Taschenrechner
 {
-    class MainWindowViewModel : INotifyPropertyChanged
+    internal class MainWindowViewModel : INotifyPropertyChanged
     {
-        /// <summary>
-        /// Komplette Rechenformel
-        /// </summary>
-        private string kompletteRechnung;
+        private readonly char[] operatoren = {'+', '-', '*', '/', '='};
 
         private string eingabe = "0";
 
         /// <summary>
-        /// Die Eingabe, welche dem Nutzer angezeigt wird.
+        ///     Komplette Rechenformel
+        /// </summary>
+        private string kompletteRechnung = string.Empty;
+
+        /// <summary>
+        ///     Die Eingabe, welche dem Nutzer angezeigt wird.
         /// </summary>
         public string Eingabe
         {
-            get => eingabe;
+            get => this.eingabe;
             set
             {
-                if (value == eingabe)
+                if (value == this.eingabe)
                 {
                     return;
                 }
 
-                eingabe = value;
-                NotifyPropertyChanged();
+                this.eingabe = value;
+                this.NotifyPropertyChanged();
             }
         }
 
-        private readonly char[] operatoren = new char[] { '+', '-', '*', '/','=' };
-
         /// <summary>
-        /// Wenn einer der Hauptbuttons betätigt wurde.
+        ///     Wenn einer der Hauptbuttons betätigt wurde.
         /// </summary>
         public ICommand GenericButtonClickCommand => new ActionCommand(delegate(object o)
         {
-            if (o is not RoutedEventArgs {Source: Button knopf })
+            if (o is not RoutedEventArgs {Source: Button knopf})
             {
                 return;
             }
@@ -51,37 +53,18 @@ namespace Taschenrechner
             this.AddInput(knopf.Content.ToString() ?? string.Empty);
         });
 
-        private void AddInput(string input)
-        {
-            if (string.IsNullOrEmpty(input))
-            {
-                return;
-            }
-
-            if (this.operatoren.Any(op => op.Equals(input[0])))
-            {
-                this.Eingabe = string.Empty;
-            } 
-            else
-            {
-                this.Eingabe += input;
-            }
-
-            this.kompletteRechnung += input;
-        }
-
         /// <summary>
-        /// Wenn das Fenster Tastatureingaben empfängt.
+        ///     Wenn das Fenster Tastatureingaben empfängt.
         /// </summary>
-        public ICommand HardwareKeyUpCommand => new ActionCommand(delegate (object o)
+        public ICommand HardwareKeyUpCommand => new ActionCommand(delegate(object o)
         {
             if (o is not KeyEventArgs args)
             {
                 return;
             }
 
-            string keyString = new KeyConverter().ConvertToString(args.Key);
-            if (keyString.Length > 1 || !char.IsDigit(keyString[0]) || !this.operatoren.Any(op => op.Equals(keyString[0])))
+            string keyString = new KeyConverter().ConvertToString(args.Key) ?? string.Empty;
+            if (string.IsNullOrEmpty(keyString) || keyString.Length > 1 || !char.IsDigit(keyString[0]))
             {
                 return;
             }
@@ -91,10 +74,38 @@ namespace Taschenrechner
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        [NotifyPropertyChangedInvocator]
-        protected virtual void NotifyPropertyChanged([CallerMemberName] string propertyName = null!)
+        private void AddInput(string input)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            if (string.IsNullOrEmpty(input))
+            {
+                return;
+            }
+
+            switch (input[0])
+            {
+                case '=':
+                    this.Eingabe = new Rechner().EvaluateExpression(this.kompletteRechnung).ToString(CultureInfo.InvariantCulture);
+                    this.kompletteRechnung = this.Eingabe;
+                    break;
+                case '*' or '+' or '-' or '/':
+                    this.kompletteRechnung += input;
+                    break;
+                default:
+                    if (this.operatoren.Any(c => c.Equals(this.kompletteRechnung[^1])))
+                    {
+                        this.Eingabe = input;
+                    }
+                    else
+                    {
+                        this.Eingabe += input;
+                        this.kompletteRechnung += input;
+                    }
+
+                    break;
+            }
         }
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void NotifyPropertyChanged([CallerMemberName] string propertyName = null!) => this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }

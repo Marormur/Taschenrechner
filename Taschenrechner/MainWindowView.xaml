@@ -9,70 +9,74 @@
         Title="Rechner" MinWidth="340" MinHeight="510" Width="340" Height="510">
     <b:Interaction.Triggers>
         <b:EventTrigger EventName="PreviewKeyUp">
-            <b:InvokeCommandAction Command="{Binding HardwareKeyUpCommand}" PassEventArgsToCommand="True"/>
+            <b:InvokeCommandAction Command="{Binding HardwareKeyUpCommand}" PassEventArgsToCommand="True" />
         </b:EventTrigger>
     </b:Interaction.Triggers>
     <Window.DataContext>
-        <local:MainWindowViewModel/>
+        <local:MainWindowViewModel />
     </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="2*"/>
-            <RowDefinition Height="4*"/>
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="4*" />
         </Grid.RowDefinitions>
 
         <Viewbox StretchDirection="DownOnly" Stretch="Uniform">
-            <TextBlock Text="{Binding Eingabe}" TextAlignment="Right"/>
+            <TextBlock Text="{Binding Eingabe}" HorizontalAlignment="Right" TextAlignment="Right" FontSize="16" />
         </Viewbox>
-        
+
         <Grid Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="8,0,8,8">
             <Grid.Resources>
                 <Style TargetType="Button" BasedOn="{StaticResource MahApps.Styles.Button.Flat}">
                     <Style.Setters>
-                        <Setter Property="MinWidth" Value="30"></Setter>
-                        <Setter Property="MinHeight" Value="30"></Setter>
-                        <Setter Property="Margin" Value="3.5"></Setter>
+                        <Setter Property="MinWidth" Value="30" />
+                        <Setter Property="MinHeight" Value="30" />
+                        <Setter Property="Margin" Value="3.5" />
                     </Style.Setters>
                 </Style>
             </Grid.Resources>
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
             <Button Grid.Row="0" Grid.Column="0" Content="7">
                 <b:Interaction.Triggers>
                     <b:EventTrigger EventName="Click">
-                        <b:InvokeCommandAction Command="{Binding GenericButtonClickCommand}" PassEventArgsToCommand="True"/>
+                        <b:InvokeCommandAction Command="{Binding GenericButtonClickCommand}"
+                                               PassEventArgsToCommand="True" />
                     </b:EventTrigger>
                 </b:Interaction.Triggers>
             </Button>
             <Button Grid.Row="0" Grid.Column="1" Content="8">
                 <b:Interaction.Triggers>
                     <b:EventTrigger EventName="Click">
-                        <b:InvokeCommandAction Command="{Binding GenericButtonClickCommand}" PassEventArgsToCommand="True"/>
+                        <b:InvokeCommandAction Command="{Binding GenericButtonClickCommand}"
+                                               PassEventArgsToCommand="True" />
                     </b:EventTrigger>
                 </b:Interaction.Triggers>
             </Button>
             <Button Grid.Row="0" Grid.Column="2" Content="9">
                 <b:Interaction.Triggers>
                     <b:EventTrigger EventName="Click">
-                        <b:InvokeCommandAction Command="{Binding GenericButtonClickCommand}" PassEventArgsToCommand="True"/>
+                        <b:InvokeCommandAction Command="{Binding GenericButtonClickCommand}"
+                                               PassEventArgsToCommand="True" />
                     </b:EventTrigger>
                 </b:Interaction.Triggers>
             </Button>
-            <Button Grid.Row="0" Grid.Column="3" Content="X">
+            <Button Grid.Row="0" Grid.Column="3" Content="*">
                 <b:Interaction.Triggers>
                     <b:EventTrigger EventName="Click">
-                        <b:InvokeCommandAction Command="{Binding GenericButtonClickCommand}" PassEventArgsToCommand="True"/>
+                        <b:InvokeCommandAction Command="{Binding GenericButtonClickCommand}"
+                                               PassEventArgsToCommand="True" />
                     </b:EventTrigger>
                 </b:Interaction.Triggers>
             </Button>
@@ -80,28 +84,32 @@
             <Button Grid.Row="1" Grid.Column="0" Content="4">
                 <b:Interaction.Triggers>
                     <b:EventTrigger EventName="Click">
-                        <b:InvokeCommandAction Command="{Binding GenericButtonClickCommand}" PassEventArgsToCommand="True"/>
+                        <b:InvokeCommandAction Command="{Binding GenericButtonClickCommand}"
+                                               PassEventArgsToCommand="True" />
                     </b:EventTrigger>
                 </b:Interaction.Triggers>
             </Button>
             <Button Grid.Row="1" Grid.Column="1" Content="5">
                 <b:Interaction.Triggers>
                     <b:EventTrigger EventName="Click">
-                        <b:InvokeCommandAction Command="{Binding GenericButtonClickCommand}" PassEventArgsToCommand="True"/>
+                        <b:InvokeCommandAction Command="{Binding GenericButtonClickCommand}"
+                                               PassEventArgsToCommand="True" />
                     </b:EventTrigger>
                 </b:Interaction.Triggers>
             </Button>
             <Button Grid.Row="1" Grid.Column="2" Content="6">
                 <b:Interaction.Triggers>
                     <b:EventTrigger EventName="Click">
-                        <b:InvokeCommandAction Command="{Binding GenericButtonClickCommand}" PassEventArgsToCommand="True"/>
+                        <b:InvokeCommandAction Command="{Binding GenericButtonClickCommand}"
+                                               PassEventArgsToCommand="True" />
                     </b:EventTrigger>
                 </b:Interaction.Triggers>
             </Button>
             <Button Grid.Row="1" Grid.Column="3" Content="-">
                 <b:Interaction.Triggers>
                     <b:EventTrigger EventName="Click">
-                        <b:InvokeCommandAction Command="{Binding GenericButtonClickCommand}" PassEventArgsToCommand="True"/>
+                        <b:InvokeCommandAction Command="{Binding GenericButtonClickCommand}"
+                                               PassEventArgsToCommand="True" />
                     </b:EventTrigger>
                 </b:Interaction.Triggers>
             </Button>
@@ -109,28 +117,32 @@
             <Button Grid.Row="2" Grid.Column="0" Content="1">
                 <b:Interaction.Triggers>
                     <b:EventTrigger EventName="Click">
-                        <b:InvokeCommandAction Command="{Binding GenericButtonClickCommand}" PassEventArgsToCommand="True"/>
+                        <b:InvokeCommandAction Command="{Binding GenericButtonClickCommand}"
+                                               PassEventArgsToCommand="True" />
                     </b:EventTrigger>
                 </b:Interaction.Triggers>
             </Button>
             <Button Grid.Row="2" Grid.Column="1" Content="2">
                 <b:Interaction.Triggers>
                     <b:EventTrigger EventName="Click">
-                        <b:InvokeCommandAction Command="{Binding GenericButtonClickCommand}" PassEventArgsToCommand="True"/>
+                        <b:InvokeCommandAction Command="{Binding GenericButtonClickCommand}"
+                                               PassEventArgsToCommand="True" />
                     </b:EventTrigger>
                 </b:Interaction.Triggers>
             </Button>
             <Button Grid.Row="2" Grid.Column="2" Content="3">
                 <b:Interaction.Triggers>
                     <b:EventTrigger EventName="Click">
-                        <b:InvokeCommandAction Command="{Binding GenericButtonClickCommand}" PassEventArgsToCommand="True"/>
+                        <b:InvokeCommandAction Command="{Binding GenericButtonClickCommand}"
+                                               PassEventArgsToCommand="True" />
                     </b:EventTrigger>
                 </b:Interaction.Triggers>
             </Button>
             <Button Grid.Row="2" Grid.Column="3" Content="+">
                 <b:Interaction.Triggers>
                     <b:EventTrigger EventName="Click">
-                        <b:InvokeCommandAction Command="{Binding GenericButtonClickCommand}" PassEventArgsToCommand="True"/>
+                        <b:InvokeCommandAction Command="{Binding GenericButtonClickCommand}"
+                                               PassEventArgsToCommand="True" />
                     </b:EventTrigger>
                 </b:Interaction.Triggers>
             </Button>
@@ -138,28 +150,32 @@
             <Button Grid.Row="3" Grid.Column="0" Content="+/-">
                 <b:Interaction.Triggers>
                     <b:EventTrigger EventName="Click">
-                        <b:InvokeCommandAction Command="{Binding GenericButtonClickCommand}" PassEventArgsToCommand="True"/>
+                        <b:InvokeCommandAction Command="{Binding GenericButtonClickCommand}"
+                                               PassEventArgsToCommand="True" />
                     </b:EventTrigger>
                 </b:Interaction.Triggers>
             </Button>
             <Button Grid.Row="3" Grid.Column="1" Content="0">
                 <b:Interaction.Triggers>
                     <b:EventTrigger EventName="Click">
-                        <b:InvokeCommandAction Command="{Binding GenericButtonClickCommand}" PassEventArgsToCommand="True"/>
+                        <b:InvokeCommandAction Command="{Binding GenericButtonClickCommand}"
+                                               PassEventArgsToCommand="True" />
                     </b:EventTrigger>
                 </b:Interaction.Triggers>
             </Button>
             <Button Grid.Row="3" Grid.Column="2" Content=",">
                 <b:Interaction.Triggers>
                     <b:EventTrigger EventName="Click">
-                        <b:InvokeCommandAction Command="{Binding GenericButtonClickCommand}" PassEventArgsToCommand="True"/>
+                        <b:InvokeCommandAction Command="{Binding GenericButtonClickCommand}"
+                                               PassEventArgsToCommand="True" />
                     </b:EventTrigger>
                 </b:Interaction.Triggers>
             </Button>
             <Button Grid.Row="3" Grid.Column="3" Content="=">
                 <b:Interaction.Triggers>
                     <b:EventTrigger EventName="Click">
-                        <b:InvokeCommandAction Command="{Binding GenericButtonClickCommand}" PassEventArgsToCommand="True"/>
+                        <b:InvokeCommandAction Command="{Binding GenericButtonClickCommand}"
+                                               PassEventArgsToCommand="True" />
                     </b:EventTrigger>
                 </b:Interaction.Triggers>
             </Button>
