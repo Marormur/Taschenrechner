@@ -20,11 +20,11 @@
             <RowDefinition Height="2*" />
             <RowDefinition Height="4*" />
         </Grid.RowDefinitions>
-
-        <Viewbox StretchDirection="DownOnly" Stretch="Uniform">
-            <TextBlock Text="{Binding Eingabe}" HorizontalAlignment="Right" TextAlignment="Right" FontSize="16" />
+        <Viewbox StretchDirection="DownOnly" Stretch="Uniform" Grid.Row="0" Margin="11">
+            <TextBlock Text="{Binding Eingabe}"  HorizontalAlignment="Right" TextAlignment="Right" FontSize="16" />
         </Viewbox>
-
+        <Rectangle Grid.Row="0" Fill="LightGray" Margin="11" Panel.ZIndex="-1">
+        </Rectangle>
         <Grid Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="8,0,8,8">
             <Grid.Resources>
                 <Style TargetType="Button" BasedOn="{StaticResource MahApps.Styles.Button.Flat}">

@@ -91,7 +91,7 @@ namespace Taschenrechner
                     this.kompletteRechnung += input;
                     break;
                 default:
-                    if (this.operatoren.Any(c => c.Equals(this.kompletteRechnung[^1])))
+                    if (this.operatoren.Any(c => c.Equals(this.kompletteRechnung.Length > 1 ? this.kompletteRechnung[^1] : this.kompletteRechnung[0])))
                     {
                         this.Eingabe = input;
                     }
