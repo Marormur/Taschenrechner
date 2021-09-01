@@ -1,11 +1,11 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using MahApps.Metro.Converters;
 using Microsoft.Xaml.Behaviors.Core;
 using Taschenrechner.Annotations;
 
@@ -17,10 +17,25 @@ namespace Taschenrechner
 
         private string eingabe = "0";
 
+        private string? kompletteRechnung;
+
         /// <summary>
         ///     Komplette Rechenformel
         /// </summary>
-        private string kompletteRechnung = string.Empty;
+        public string KompletteRechnung
+        {
+            get => this.kompletteRechnung ??= string.Empty;
+            set
+            {
+                if (value == this.kompletteRechnung)
+                {
+                    return;
+                }
+
+                this.kompletteRechnung = value;
+                this.NotifyPropertyChanged();
+            }
+        }
 
         /// <summary>
         ///     Die Eingabe, welche dem Nutzer angezeigt wird.
@@ -40,12 +55,34 @@ namespace Taschenrechner
             }
         }
 
+        private WindowState fensterStatus = WindowState.Normal;
+
+        public WindowState FensterStatus
+        {
+            get => this.fensterStatus;
+            set
+            {
+                if (value == this.fensterStatus)
+                {
+                    return;
+                }
+
+                this.fensterStatus = value;
+                this.NotifyPropertyChanged();
+            }
+        }
+
+        public ICommand TitleBarMouseLeftButtonDownCommand =>
+            new ActionCommand(o => MainWindowView.Instance.DragMove());
+
+        public ICommand TitleBarCloseButtonCommand => new ActionCommand(o => Environment.Exit(0));
+
         /// <summary>
         ///     Wenn einer der Hauptbuttons betätigt wurde.
         /// </summary>
         public ICommand GenericButtonClickCommand => new ActionCommand(delegate(object o)
         {
-            if (o is not RoutedEventArgs {Source: Button knopf})
+            if (o is not RoutedEventArgs { Source: Button knopf})
             {
                 return;
             }
@@ -81,31 +118,54 @@ namespace Taschenrechner
                 return;
             }
 
+            if (this.Eingabe == "0")
+            {
+                this.Eingabe = string.Empty;
+            }
+
             switch (input[0])
             {
                 case '=':
-                    this.Eingabe = new Rechner().EvaluateExpression(this.kompletteRechnung).ToString(CultureInfo.InvariantCulture);
-                    this.kompletteRechnung = this.Eingabe;
+                    this.Eingabe = new Rechner().EvaluateExpression(this.KompletteRechnung)
+                        .ToString(CultureInfo.InvariantCulture);
+                    this.KompletteRechnung += "=";
                     break;
                 case '*' or '+' or '-' or '/':
-                    this.kompletteRechnung += input;
+                    if (this.KompletteRechnung.EndsWith('='))
+                    {
+                        this.KompletteRechnung = this.Eingabe + input;
+                    }
+                    else
+                    {
+                        this.KompletteRechnung += input;
+                    }
                     break;
                 default:
-                    if (this.operatoren.Any(c => c.Equals(this.kompletteRechnung.Length > 1 ? this.kompletteRechnung[^1] : this.kompletteRechnung[0])))
+                    if (this.KompletteRechnung.EndsWith('='))
+                    {
+                        this.KompletteRechnung = string.Empty;
+                        this.Eingabe = string.Empty;
+                    }
+
+                    if (this.operatoren.Any(c =>
+                        c.Equals(this.KompletteRechnung.Length < 1 ? string.Empty :
+                            this.KompletteRechnung.Length > 1 ? this.KompletteRechnung[^1] :
+                            this.KompletteRechnung[0])))
                     {
                         this.Eingabe = input;
                     }
                     else
                     {
                         this.Eingabe += input;
-                        this.kompletteRechnung += input;
                     }
 
+                    this.KompletteRechnung += input;
                     break;
             }
         }
 
         [NotifyPropertyChangedInvocator]
-        protected virtual void NotifyPropertyChanged([CallerMemberName] string propertyName = null!) => this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        protected virtual void NotifyPropertyChanged([CallerMemberName] string propertyName = null!) =>
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }

@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:Taschenrechner"
         xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
-        Title="Rechner" MinWidth="340" MinHeight="510" Width="340" Height="510">
+        Title="Rechner" MinWidth="340" MinHeight="510" Width="340" Height="510" AllowsTransparency="True"
+        WindowStyle="None" WindowState="{Binding FensterStatus}" ResizeMode="CanResizeWithGrip">
     <b:Interaction.Triggers>
         <b:EventTrigger EventName="PreviewKeyUp">
             <b:InvokeCommandAction Command="{Binding HardwareKeyUpCommand}" PassEventArgsToCommand="True" />
@@ -15,170 +16,247 @@
     <Window.DataContext>
         <local:MainWindowViewModel />
     </Window.DataContext>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="2*" />
-            <RowDefinition Height="4*" />
-        </Grid.RowDefinitions>
-        <Viewbox StretchDirection="DownOnly" Stretch="Uniform" Grid.Row="0" Margin="11">
-            <TextBlock Text="{Binding Eingabe}"  HorizontalAlignment="Right" TextAlignment="Right" FontSize="16" />
-        </Viewbox>
-        <Rectangle Grid.Row="0" Fill="LightGray" Margin="11" Panel.ZIndex="-1">
-        </Rectangle>
-        <Grid Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="8,0,8,8">
-            <Grid.Resources>
-                <Style TargetType="Button" BasedOn="{StaticResource MahApps.Styles.Button.Flat}">
-                    <Style.Setters>
-                        <Setter Property="MinWidth" Value="30" />
-                        <Setter Property="MinHeight" Value="30" />
-                        <Setter Property="Margin" Value="3.5" />
-                    </Style.Setters>
-                </Style>
-            </Grid.Resources>
+    <Window.Background>
+        <SolidColorBrush Opacity="1" Color="#C1151515" />
+    </Window.Background>
+    <Window.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Button" BasedOn="{StaticResource MahApps.Styles.Button.Flat}" x:Key="BaseButtonStyle">
+                <Style.Setters>
+                    <Setter Property="Foreground" Value="LightGray" />
+                    <Setter Property="Background" Value="Black" />
+                    <Setter Property="MinWidth" Value="30" />
+                    <Setter Property="MinHeight" Value="25" />
+                    <Setter Property="Margin" Value="3.5" />
+                    <Setter Property="FontSize" Value="22" />
+                    <Setter Property="FontWeight" Value="DemiBold" />
+                </Style.Setters>
+            </Style>
+            <Style TargetType="Button" BasedOn="{StaticResource BaseButtonStyle}" x:Key="OperatorButtonStyle">
+                <Style.Setters>
+                    <Setter Property="Background" Value="DimGray"/>
+                </Style.Setters>
+            </Style>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Border BorderThickness="1" BorderBrush="#4B4B4B" CornerRadius="5">
+        <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
+                <RowDefinition Height="30" />
+                <RowDefinition Height="2*" />
+                <RowDefinition Height="4*" />
             </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
 
-            <Button Grid.Row="0" Grid.Column="0" Content="7">
-                <b:Interaction.Triggers>
-                    <b:EventTrigger EventName="Click">
-                        <b:InvokeCommandAction Command="{Binding GenericButtonClickCommand}"
-                                               PassEventArgsToCommand="True" />
-                    </b:EventTrigger>
-                </b:Interaction.Triggers>
-            </Button>
-            <Button Grid.Row="0" Grid.Column="1" Content="8">
-                <b:Interaction.Triggers>
-                    <b:EventTrigger EventName="Click">
-                        <b:InvokeCommandAction Command="{Binding GenericButtonClickCommand}"
-                                               PassEventArgsToCommand="True" />
-                    </b:EventTrigger>
-                </b:Interaction.Triggers>
-            </Button>
-            <Button Grid.Row="0" Grid.Column="2" Content="9">
-                <b:Interaction.Triggers>
-                    <b:EventTrigger EventName="Click">
-                        <b:InvokeCommandAction Command="{Binding GenericButtonClickCommand}"
-                                               PassEventArgsToCommand="True" />
-                    </b:EventTrigger>
-                </b:Interaction.Triggers>
-            </Button>
-            <Button Grid.Row="0" Grid.Column="3" Content="*">
-                <b:Interaction.Triggers>
-                    <b:EventTrigger EventName="Click">
-                        <b:InvokeCommandAction Command="{Binding GenericButtonClickCommand}"
-                                               PassEventArgsToCommand="True" />
-                    </b:EventTrigger>
-                </b:Interaction.Triggers>
-            </Button>
 
-            <Button Grid.Row="1" Grid.Column="0" Content="4">
-                <b:Interaction.Triggers>
-                    <b:EventTrigger EventName="Click">
-                        <b:InvokeCommandAction Command="{Binding GenericButtonClickCommand}"
-                                               PassEventArgsToCommand="True" />
-                    </b:EventTrigger>
-                </b:Interaction.Triggers>
-            </Button>
-            <Button Grid.Row="1" Grid.Column="1" Content="5">
-                <b:Interaction.Triggers>
-                    <b:EventTrigger EventName="Click">
-                        <b:InvokeCommandAction Command="{Binding GenericButtonClickCommand}"
-                                               PassEventArgsToCommand="True" />
-                    </b:EventTrigger>
-                </b:Interaction.Triggers>
-            </Button>
-            <Button Grid.Row="1" Grid.Column="2" Content="6">
-                <b:Interaction.Triggers>
-                    <b:EventTrigger EventName="Click">
-                        <b:InvokeCommandAction Command="{Binding GenericButtonClickCommand}"
-                                               PassEventArgsToCommand="True" />
-                    </b:EventTrigger>
-                </b:Interaction.Triggers>
-            </Button>
-            <Button Grid.Row="1" Grid.Column="3" Content="-">
-                <b:Interaction.Triggers>
-                    <b:EventTrigger EventName="Click">
-                        <b:InvokeCommandAction Command="{Binding GenericButtonClickCommand}"
-                                               PassEventArgsToCommand="True" />
-                    </b:EventTrigger>
-                </b:Interaction.Triggers>
-            </Button>
+                <TextBlock Grid.Column="0" Text="Rechner" Foreground="LightGray" VerticalAlignment="Center"
+                           Margin="11,0,0,0" />
+                <StackPanel Orientation="Horizontal" Grid.Column="2">
+                    <StackPanel.Resources>
+                        <Style TargetType="Button" BasedOn="{StaticResource BaseButtonStyle}" x:Key="TitleBarButtonStyle">
+                            <Style.Setters>
+                                <Setter Property="Background" Value="DimGray" />
+                                <Setter Property="HorizontalAlignment" Value="Right" />
+                                <Setter Property="VerticalAlignment" Value="Top" />
+                                <Setter Property="Width" Value="45" />
+                                <Setter Property="Height" Value="28" />
+                                <Setter Property="Margin" Value="0"/>
+                            </Style.Setters>
+                        </Style>
+                    </StackPanel.Resources>
+                    <Button Style="{StaticResource TitleBarButtonStyle}" Content="_"/>
+                    <Button Style="{StaticResource TitleBarButtonStyle}" Content="[]"/>
+                    <Button Command="{Binding TitleBarCloseButtonCommand}" Content="X">
+                        <Button.Style>
+                            <Style TargetType="Button" BasedOn="{StaticResource TitleBarButtonStyle}" >
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type Button}">
+                                            <Border Background="{TemplateBinding Background}">
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="Red"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                </StackPanel>
+                <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="Transparent"
+                           Grid.ColumnSpan="3"
+                           Grid.Column="0">
+                    <b:Interaction.Triggers>
+                        <b:EventTrigger EventName="MouseLeftButtonDown">
+                            <b:InvokeCommandAction Command="{Binding TitleBarMouseLeftButtonDownCommand}" />
+                        </b:EventTrigger>
+                    </b:Interaction.Triggers>
+                </Rectangle>
+            </Grid>
+            <TextBlock Grid.Row="1" Text="{Binding KompletteRechnung}" d:Text="095+46/54-1658+4"
+                       HorizontalAlignment="Right" Margin="0,30,30,0" FontSize="20" Foreground="LightGray" />
+            <Viewbox StretchDirection="DownOnly" Stretch="Uniform" Grid.Row="1" Margin="11" HorizontalAlignment="Right"
+                     VerticalAlignment="Bottom">
+                <TextBlock Text="{Binding Eingabe}" HorizontalAlignment="Right" TextAlignment="Right"
+                           VerticalAlignment="Bottom" FontSize="40" Margin="0,0,19,28" />
+            </Viewbox>
+            <Rectangle Grid.Row="1" Fill="DimGray" Margin="11" Panel.ZIndex="-1" />
+            <Grid Grid.Row="2" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                  Margin="8,0,8,8">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
 
-            <Button Grid.Row="2" Grid.Column="0" Content="1">
-                <b:Interaction.Triggers>
-                    <b:EventTrigger EventName="Click">
-                        <b:InvokeCommandAction Command="{Binding GenericButtonClickCommand}"
-                                               PassEventArgsToCommand="True" />
-                    </b:EventTrigger>
-                </b:Interaction.Triggers>
-            </Button>
-            <Button Grid.Row="2" Grid.Column="1" Content="2">
-                <b:Interaction.Triggers>
-                    <b:EventTrigger EventName="Click">
-                        <b:InvokeCommandAction Command="{Binding GenericButtonClickCommand}"
-                                               PassEventArgsToCommand="True" />
-                    </b:EventTrigger>
-                </b:Interaction.Triggers>
-            </Button>
-            <Button Grid.Row="2" Grid.Column="2" Content="3">
-                <b:Interaction.Triggers>
-                    <b:EventTrigger EventName="Click">
-                        <b:InvokeCommandAction Command="{Binding GenericButtonClickCommand}"
-                                               PassEventArgsToCommand="True" />
-                    </b:EventTrigger>
-                </b:Interaction.Triggers>
-            </Button>
-            <Button Grid.Row="2" Grid.Column="3" Content="+">
-                <b:Interaction.Triggers>
-                    <b:EventTrigger EventName="Click">
-                        <b:InvokeCommandAction Command="{Binding GenericButtonClickCommand}"
-                                               PassEventArgsToCommand="True" />
-                    </b:EventTrigger>
-                </b:Interaction.Triggers>
-            </Button>
+                <Button Grid.Row="0" Grid.Column="0" Content="7" Style="{StaticResource BaseButtonStyle}">
+                    <b:Interaction.Triggers>
+                        <b:EventTrigger EventName="Click">
+                            <b:InvokeCommandAction Command="{Binding GenericButtonClickCommand}"
+                                                   PassEventArgsToCommand="True" />
+                        </b:EventTrigger>
+                    </b:Interaction.Triggers>
+                </Button>
+                <Button Grid.Row="0" Grid.Column="1" Content="8" Style="{StaticResource BaseButtonStyle}">
+                    <b:Interaction.Triggers>
+                        <b:EventTrigger EventName="Click">
+                            <b:InvokeCommandAction Command="{Binding GenericButtonClickCommand}"
+                                                   PassEventArgsToCommand="True" />
+                        </b:EventTrigger>
+                    </b:Interaction.Triggers>
+                </Button>
+                <Button Grid.Row="0" Grid.Column="2" Content="9" Style="{StaticResource BaseButtonStyle}">
+                    <b:Interaction.Triggers>
+                        <b:EventTrigger EventName="Click">
+                            <b:InvokeCommandAction Command="{Binding GenericButtonClickCommand}"
+                                                   PassEventArgsToCommand="True" />
+                        </b:EventTrigger>
+                    </b:Interaction.Triggers>
+                </Button>
+                <Button Grid.Row="0" Grid.Column="3" Content="*" Style="{StaticResource OperatorButtonStyle}">
+                    <b:Interaction.Triggers>
+                        <b:EventTrigger EventName="Click">
+                            <b:InvokeCommandAction Command="{Binding GenericButtonClickCommand}"
+                                                   PassEventArgsToCommand="True" />
+                        </b:EventTrigger>
+                    </b:Interaction.Triggers>
+                </Button>
 
-            <Button Grid.Row="3" Grid.Column="0" Content="+/-">
-                <b:Interaction.Triggers>
-                    <b:EventTrigger EventName="Click">
-                        <b:InvokeCommandAction Command="{Binding GenericButtonClickCommand}"
-                                               PassEventArgsToCommand="True" />
-                    </b:EventTrigger>
-                </b:Interaction.Triggers>
-            </Button>
-            <Button Grid.Row="3" Grid.Column="1" Content="0">
-                <b:Interaction.Triggers>
-                    <b:EventTrigger EventName="Click">
-                        <b:InvokeCommandAction Command="{Binding GenericButtonClickCommand}"
-                                               PassEventArgsToCommand="True" />
-                    </b:EventTrigger>
-                </b:Interaction.Triggers>
-            </Button>
-            <Button Grid.Row="3" Grid.Column="2" Content=",">
-                <b:Interaction.Triggers>
-                    <b:EventTrigger EventName="Click">
-                        <b:InvokeCommandAction Command="{Binding GenericButtonClickCommand}"
-                                               PassEventArgsToCommand="True" />
-                    </b:EventTrigger>
-                </b:Interaction.Triggers>
-            </Button>
-            <Button Grid.Row="3" Grid.Column="3" Content="=">
-                <b:Interaction.Triggers>
-                    <b:EventTrigger EventName="Click">
-                        <b:InvokeCommandAction Command="{Binding GenericButtonClickCommand}"
-                                               PassEventArgsToCommand="True" />
-                    </b:EventTrigger>
-                </b:Interaction.Triggers>
-            </Button>
+                <Button Grid.Row="1" Grid.Column="0" Content="4" Style="{StaticResource BaseButtonStyle}">
+                    <b:Interaction.Triggers>
+                        <b:EventTrigger EventName="Click">
+                            <b:InvokeCommandAction Command="{Binding GenericButtonClickCommand}"
+                                                   PassEventArgsToCommand="True" />
+                        </b:EventTrigger>
+                    </b:Interaction.Triggers>
+                </Button>
+                <Button Grid.Row="1" Grid.Column="1" Content="5" Style="{StaticResource BaseButtonStyle}">
+                    <b:Interaction.Triggers>
+                        <b:EventTrigger EventName="Click">
+                            <b:InvokeCommandAction Command="{Binding GenericButtonClickCommand}"
+                                                   PassEventArgsToCommand="True" />
+                        </b:EventTrigger>
+                    </b:Interaction.Triggers>
+                </Button>
+                <Button Grid.Row="1" Grid.Column="2" Content="6" Style="{StaticResource BaseButtonStyle}">
+                    <b:Interaction.Triggers>
+                        <b:EventTrigger EventName="Click">
+                            <b:InvokeCommandAction Command="{Binding GenericButtonClickCommand}"
+                                                   PassEventArgsToCommand="True" />
+                        </b:EventTrigger>
+                    </b:Interaction.Triggers>
+                </Button>
+                <Button Grid.Row="1" Grid.Column="3" Content="-" Style="{StaticResource OperatorButtonStyle}">
+                    <b:Interaction.Triggers>
+                        <b:EventTrigger EventName="Click">
+                            <b:InvokeCommandAction Command="{Binding GenericButtonClickCommand}"
+                                                   PassEventArgsToCommand="True" />
+                        </b:EventTrigger>
+                    </b:Interaction.Triggers>
+                </Button>
+
+                <Button Grid.Row="2" Grid.Column="0" Content="1" Style="{StaticResource BaseButtonStyle}">
+                    <b:Interaction.Triggers>
+                        <b:EventTrigger EventName="Click">
+                            <b:InvokeCommandAction Command="{Binding GenericButtonClickCommand}"
+                                                   PassEventArgsToCommand="True" />
+                        </b:EventTrigger>
+                    </b:Interaction.Triggers>
+                </Button>
+                <Button Grid.Row="2" Grid.Column="1" Content="2" Style="{StaticResource BaseButtonStyle}">
+                    <b:Interaction.Triggers>
+                        <b:EventTrigger EventName="Click">
+                            <b:InvokeCommandAction Command="{Binding GenericButtonClickCommand}"
+                                                   PassEventArgsToCommand="True" />
+                        </b:EventTrigger>
+                    </b:Interaction.Triggers>
+                </Button>
+                <Button Grid.Row="2" Grid.Column="2" Content="3" Style="{StaticResource BaseButtonStyle}">
+                    <b:Interaction.Triggers>
+                        <b:EventTrigger EventName="Click">
+                            <b:InvokeCommandAction Command="{Binding GenericButtonClickCommand}"
+                                                   PassEventArgsToCommand="True" />
+                        </b:EventTrigger>
+                    </b:Interaction.Triggers>
+                </Button>
+                <Button Grid.Row="2" Grid.Column="3" Content="+" Style="{StaticResource OperatorButtonStyle}">
+                    <b:Interaction.Triggers>
+                        <b:EventTrigger EventName="Click">
+                            <b:InvokeCommandAction Command="{Binding GenericButtonClickCommand}"
+                                                   PassEventArgsToCommand="True" />
+                        </b:EventTrigger>
+                    </b:Interaction.Triggers>
+                </Button>
+
+                <Button Grid.Row="3" Grid.Column="0" Content="+/-" Style="{StaticResource BaseButtonStyle}">
+                    <b:Interaction.Triggers>
+                        <b:EventTrigger EventName="Click">
+                            <b:InvokeCommandAction Command="{Binding GenericButtonClickCommand}"
+                                                   PassEventArgsToCommand="True" />
+                        </b:EventTrigger>
+                    </b:Interaction.Triggers>
+                </Button>
+                <Button Grid.Row="3" Grid.Column="1" Content="0" Style="{StaticResource BaseButtonStyle}">
+                    <b:Interaction.Triggers>
+                        <b:EventTrigger EventName="Click">
+                            <b:InvokeCommandAction Command="{Binding GenericButtonClickCommand}"
+                                                   PassEventArgsToCommand="True" />
+                        </b:EventTrigger>
+                    </b:Interaction.Triggers>
+                </Button>
+                <Button Grid.Row="3" Grid.Column="2" Content="," Style="{StaticResource BaseButtonStyle}">
+                    <b:Interaction.Triggers>
+                        <b:EventTrigger EventName="Click">
+                            <b:InvokeCommandAction Command="{Binding GenericButtonClickCommand}"
+                                                   PassEventArgsToCommand="True" />
+                        </b:EventTrigger>
+                    </b:Interaction.Triggers>
+                </Button>
+                <Button Grid.Row="3" Grid.Column="3" Content="=" Style="{StaticResource BaseButtonStyle}" Background="#02518E">
+                    <b:Interaction.Triggers>
+                        <b:EventTrigger EventName="Click">
+                            <b:InvokeCommandAction Command="{Binding GenericButtonClickCommand}"
+                                                   PassEventArgsToCommand="True" />
+                        </b:EventTrigger>
+                    </b:Interaction.Triggers>
+                </Button>
+            </Grid>
         </Grid>
-    </Grid>
+    </Border>
 </Window>
